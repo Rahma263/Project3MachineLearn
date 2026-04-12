@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description"
+        content="Customer Segments — Interactive ML Dashboard for unsupervised learning analysis of wholesale customer spending data.">
+    <title>Customer Segments — ML Dashboard</title>
+    <link rel="stylesheet" href="/static/style.css">
+    <script src="https://cdn.plot.ly/plotly-2.27.0.min.js"></script>
+</head>
+
+<body>
+
+    <!-- ============================================================= -->
+    <!-- HERO                                                           -->
+    <!-- ============================================================= -->
+    <header class="hero">
+        <h1>Customer Segments</h1>
+        <p class="subtitle">Unsupervised Learning Dashboard — Wholesale Customer Analysis</p>
+        <span class="badge">PCA &bull; GMM Clustering &bull; Outlier Detection</span>
+    </header>
+
+    <main class="container">
+
+        <!-- ============================================================= -->
+        <!-- 1. DATA OVERVIEW                                               -->
+        <!-- ============================================================= -->
+        <section id="sec-overview">
+            <div class="card">
+                <h2><span class="icon">📊</span> Dataset Overview</h2>
+                <p class="desc">440 wholesale customers across 6 product categories (monetary units).</p>
+
+                <div class="stat-grid" id="stat-grid">
+                    <!-- filled by JS -->
+                </div>
+
+                <div class="table-wrap" id="stats-table-wrap">
+                    <!-- filled by JS -->
+                </div>
+            </div>
+        </section>
+
+        <!-- ============================================================= -->
+        <!-- 2. SAMPLE SELECTION                                            -->
+        <!-- ============================================================= -->
+        <section id="sec-samples">
+            <div class="card">
+                <h2><span class="icon">🔍</span> Sample Customers</h2>
+                <p class="desc">Pick three customer indices to track throughout the analysis.</p>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Index 1</label>
+                        <input type="number" id="idx1" value="0" min="0" max="439">
+                    </div>
+                    <div class="form-group">
+                        <label>Index 2</label>
+                        <input type="number" id="idx2" value="100" min="0" max="439">
+                    </div>
+                    <div class="form-group">
+                        <label>Index 3</label>
+                        <input type="number" id="idx3" value="300" min="0" max="439">
+                    </div>
+                    <button class="btn btn-primary" onclick="loadSamples()">Load Samples</button>
+                </div>
+                <div class="table-wrap" id="samples-table-wrap"></div>
+            </div>
+        </section>
+
+        <!-- ============================================================= -->
+        <!-- 3. FEATURE RELEVANCE                                           -->
+        <!-- ============================================================= -->
+        <section id="sec-relevance">
+            <div class="card">
+                <h2><span class="icon">🎯</span> Feature Relevance Test</h2>
+                <p class="desc">Train a Decision Tree Regressor to predict one feature from the rest. High R² → feature
+                    is redundant.</p>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Feature to predict</label>
+                        <select id="select-feature">
+                            <option value="Fresh">Fresh</option>
+                            <option value="Milk">Milk</option>
+                            <option value="Grocery" selected>Grocery</option>
+                            <option value="Frozen">Frozen</option>
+                            <option value="Detergents_Paper">Detergents_Paper</option>
+                            <option value="Delicatessen">Delicatessen</option>
+                        </select>
+                    </div>
+                    <button class="btn btn-primary" onclick="runRelevance()">Run Test</button>
+                </div>
+                <div id="relevance-result" class="hidden">
+                    <div class="score-bar-wrap">
+                        <div class="score-bar-track">
+                            <div class="score-bar-fill" id="score-fill" style="width:0%"></div>
+                        </div>
+                        <p class="score-label" id="score-text"></p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ============================================================= -->
+        <!-- 4. OUTLIER DETECTION                                           -->
+        <!-- ============================================================= -->
+        <section id="sec-outliers">
+            <div class="card">
+                <h2><span class="icon">⚡</span> Outlier Detection</h2>
+                <p class="desc">Using the 1.5×IQR rule on log-transformed data. Points appearing in ≥ 2 features are
+                    removed.</p>
+                <button class="btn btn-primary" onclick="runOutliers()">Detect Outliers</button>
+                <div id="outliers-result" class="hidden" style="margin-top:16px;"></div>
+            </div>
+        </section>
+
+        <!-- ============================================================= -->
+        <!-- 5. PCA                                                         -->
+        <!-- ============================================================= -->
+        <section id="sec-pca">
+            <div class="card">
+                <h2><span class="icon">🧬</span> PCA — Principal Component Analysis</h2>
+                <p class="desc">Reduce 6 features to principal components and visualize explained variance.</p>
+                <button class="btn btn-primary" onclick="runPCA()">Run PCA</button>
+                <div id="pca-result" class="hidden" style="margin-top:16px;">
+                    <div class="chart-container" id="pca-variance-chart"></div>
+                    <div class="chart-container" id="pca-weights-chart" style="margin-top:18px;"></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ============================================================= -->
+        <!-- 6. CLUSTERING                                                  -->
+        <!-- ============================================================= -->
+        <section id="sec-cluster">
+            <div class="card">
+                <h2><span class="icon">🗂️</span> Gaussian Mixture Clustering</h2>
+                <p class="desc">Cluster customers on PCA-reduced data and compare with actual Channel labels.</p>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Number of Clusters</label>
+                        <select id="n-clusters">
+                            <option value="2" selected>2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                            <option value="5">5</option>
+                        </select>
+                    </div>
+                    <button class="btn btn-primary" onclick="runClustering()">Cluster</button>
+                </div>
+                <div id="cluster-result" class="hidden" style="margin-top:16px;">
+                    <div class="chart-container" id="cluster-chart"></div>
+                    <div class="chart-container" id="channel-chart" style="margin-top:18px;"></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ============================================================= -->
+        <!-- 7. PREDICT SEGMENT                                             -->
+        <!-- ============================================================= -->
+        <section id="sec-predict">
+            <div class="card">
+                <h2><span class="icon">🛒</span> Predict Customer Segment</h2>
+                <p class="desc">Enter annual spending (monetary units) for a new customer to predict their segment.</p>
+                <div class="form-row">
+                    <div class="form-group"><label>Fresh</label><input type="number" id="p-fresh" value="12000"></div>
+                    <div class="form-group"><label>Milk</label><input type="number" id="p-milk" value="5800"></div>
+                    <div class="form-group"><label>Grocery</label><input type="number" id="p-grocery" value="7950">
+                    </div>
+                    <div class="form-group"><label>Frozen</label><input type="number" id="p-frozen" value="3070"></div>
+                    <div class="form-group"><label>Det. Paper</label><input type="number" id="p-det" value="2880"></div>
+                    <div class="form-group"><label>Deli</label><input type="number" id="p-deli" value="1520"></div>
+                </div>
+                <div class="form-row">
+                    <button class="btn btn-primary" onclick="predictSegment()">Predict Segment</button>
+                </div>
+                <div id="predict-result" class="hidden"></div>
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="footer">
+        Customer Segments Dashboard &bull; Unsupervised Learning Project &bull; Built with Flask &amp; Plotly
+    </footer>
+
+    <!-- ============================================================= -->
+    <!-- JAVASCRIPT                                                     -->
+    <!-- ============================================================= -->
+    <script>
+        const API = '';
+        const plotlyLayout = {
+            paper_bgcolor: 'rgba(0,0,0,0)',
+            plot_bgcolor: 'rgba(0,0,0,0)',
+            font: { family: 'Inter, sans-serif', color: '#94a3b8', size: 12 },
+            margin: { t: 40, r: 30, b: 50, l: 50 },
+            xaxis: { gridcolor: 'rgba(255,255,255,0.04)', zerolinecolor: 'rgba(255,255,255,0.08)' },
+            yaxis: { gridcolor: 'rgba(255,255,255,0.04)', zerolinecolor: 'rgba(255,255,255,0.08)' },
+            legend: { bgcolor: 'rgba(0,0,0,0)' },
+        };
+        const plotlyConfig = { responsive: true, displayModeBar: false };
+
+        /* ---- helpers ---- */
+        async function post(url, body = {}) {
+            const r = await fetch(API + url, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(body)
+            });
+            return r.json();
+        }
+
+        function buildTable(columns, rows, rowLabels) {
+            let h = '<table><thead><tr><th></th>';
+            columns.forEach(c => h += `<th>${c}</th>`);
+            h += '</tr></thead><tbody>';
+            rows.forEach((row, i) => {
+                const lbl = rowLabels ? rowLabels[i] : i;
+                h += `<tr><td>${lbl}</td>`;
+                row.forEach(v => h += `<td>${typeof v === 'number' ? v.toLocaleString(undefined, { maximumFractionDigits: 2 }) : v}</td>`);
+                h += '</tr>';
+            });
+            h += '</tbody></table>';
+            return h;
+        }
+
+        /* ---- 1. load overview on page load ---- */
+        async function loadOverview() {
+            const d = await post('/api/statistics');
+            const cols = d.columns;
+            const statKeys = Object.keys(d.stats);
+            const rows = statKeys.map(k => cols.map(c => d.stats[k][c]));
+
+            // mini stat cards
+            const mean = d.stats['mean'];
+            let grid = '';
+            cols.forEach(c => {
+                grid += `<div class="stat-mini"><div class="label">${c}</div><div class="value">${Math.round(mean[c]).toLocaleString()}</div></div>`;
+            });
+            document.getElementById('stat-grid').innerHTML = grid;
+
+            document.getElementById('stats-table-wrap').innerHTML = buildTable(cols, rows, statKeys);
+        }
+
+        /* ---- 2. samples ---- */
+        async function loadSamples() {
+            const indices = [
+                parseInt(document.getElementById('idx1').value),
+                parseInt(document.getElementById('idx2').value),
+                parseInt(document.getElementById('idx3').value)
+            ];
+            const d = await post('/api/samples', { indices });
+            document.getElementById('samples-table-wrap').innerHTML =
+                buildTable(d.columns, d.rows, d.indices.map(i => `Customer ${i}`));
+        }
+
+        /* ---- 3. feature relevance ---- */
+        async function runRelevance() {
+            const feature = document.getElementById('select-feature').value;
+            const d = await post('/api/feature_relevance', { feature });
+            const pct = Math.max(0, Math.min(100, d.r2_score * 100));
+            document.getElementById('score-fill').style.width = pct + '%';
+            document.getElementById('score-text').textContent = d.interpretation;
+            document.getElementById('relevance-result').classList.remove('hidden');
+        }
+
+        /* ---- 4. outliers ---- */
+        async function runOutliers() {
+            const d = await post('/api/outliers');
+            let html = '<div class="stat-grid" style="margin-bottom:14px;">';
+            html += `<div class="stat-mini"><div class="label">Total Removed</div><div class="value">${d.total_removed}</div></div>`;
+            const feats = Object.keys(d.per_feature);
+            feats.forEach(f => {
+                const cnt = d.per_feature[f].length;
+                html += `<div class="stat-mini"><div class="label">${f}</div><div class="value">${cnt}</div></div>`;
+            });
+            html += '</div>';
+
+            html += '<p style="margin-bottom:8px;font-weight:600;">Multi-feature outlier indices removed:</p>';
+            d.multi_outliers.forEach(idx => {
+                html += `<span class="chip chip-danger">#${idx}</span> `;
+            });
+
+            document.getElementById('outliers-result').innerHTML = html;
+            document.getElementById('outliers-result').classList.remove('hidden');
+        }
+
+        /* ---- 5. PCA ---- */
+        async function runPCA() {
+            const d = await post('/api/pca');
+            // Variance bar chart
+            Plotly.newPlot('pca-variance-chart', [{
+                x: d.dimensions,
+                y: d.explained_variance,
+                type: 'bar',
+                marker: {
+                    color: d.explained_variance.map((_, i) => {
+                        const colors = ['#6366f1', '#8b5cf6', '#a855f7', '#d946ef', '#ec4899', '#f43f5e'];
+                        return colors[i % colors.length];
+                    }),
+                    line: { width: 0 }
+                },
+                text: d.explained_variance.map(v => (v * 100).toFixed(2) + '%'),
+                textposition: 'outside',
+                textfont: { color: '#e2e8f0' }
+            }], {
+                ...plotlyLayout,
+                title: { text: 'Explained Variance Ratio per Component', font: { color: '#e2e8f0', size: 14 } },
+                yaxis: { ...plotlyLayout.yaxis, title: 'Ratio' }
+            }, plotlyConfig);
+
+            // Component weights grouped bar
+            const features = d.features;
+            const traces = features.map((f, fi) => ({
+                name: f,
+                x: d.dimensions,
+                y: d.dimensions.map(dim => d.components[dim][f]),
+                type: 'bar'
+            }));
+            Plotly.newPlot('pca-weights-chart', traces, {
+                ...plotlyLayout,
+                barmode: 'group',
+                title: { text: 'Feature Weights per PCA Component', font: { color: '#e2e8f0', size: 14 } },
+                yaxis: { ...plotlyLayout.yaxis, title: 'Weight' }
+            }, plotlyConfig);
+
+            document.getElementById('pca-result').classList.remove('hidden');
+        }
+
+        /* ---- 6. clustering ---- */
+        async function runClustering() {
+            const n = parseInt(document.getElementById('n-clusters').value);
+            const d = await post('/api/cluster', { n_clusters: n });
+
+            // Cluster scatter
+            const clusterTraces = [];
+            const colors = ['#6366f1', '#ec4899', '#22d3ee', '#a3e635', '#fb923c'];
+            for (let c = 0; c < d.clusters.n_clusters; c++) {
+                const xi = [], yi = [];
+                d.clusters.predictions.forEach((p, i) => {
+                    if (p === c) { xi.push(d.clusters.dim1[i]); yi.push(d.clusters.dim2[i]); }
+                });
+                clusterTraces.push({
+                    x: xi, y: yi, mode: 'markers', type: 'scatter',
+                    name: `Cluster ${c}`,
+                    marker: { color: colors[c % colors.length], size: 6, opacity: 0.7 }
+                });
+            }
+            // Centres
+            clusterTraces.push({
+                x: d.clusters.centres.map(c => c[0]),
+                y: d.clusters.centres.map(c => c[1]),
+                mode: 'markers+text',
+                type: 'scatter',
+                name: 'Centres',
+                text: d.clusters.centres.map((_, i) => i.toString()),
+                textposition: 'top center',
+                textfont: { color: '#fff', size: 14, family: 'Inter' },
+                marker: { color: '#fff', size: 14, symbol: 'diamond', line: { color: '#000', width: 2 } }
+            });
+            Plotly.newPlot('cluster-chart', clusterTraces, {
+                ...plotlyLayout,
+                title: { text: 'GMM Clusters on PCA-Reduced Data', font: { color: '#e2e8f0', size: 14 } },
+                xaxis: { ...plotlyLayout.xaxis, title: 'Dimension 1' },
+                yaxis: { ...plotlyLayout.yaxis, title: 'Dimension 2' }
+            }, plotlyConfig);
+
+            // Channel comparison
+            const chanTraces = [];
+            const chanColors = ['#f472b6', '#22d3ee'];
+            const chanLabels = ['Hotel/Restaurant/Cafe', 'Retailer'];
+            [1, 2].forEach((ch, ci) => {
+                const xi = [], yi = [];
+                d.channels.channels.forEach((c, i) => {
+                    if (c === ch) { xi.push(d.channels.dim1[i]); yi.push(d.channels.dim2[i]); }
+                });
+                chanTraces.push({
+                    x: xi, y: yi, mode: 'markers', type: 'scatter',
+                    name: chanLabels[ci],
+                    marker: { color: chanColors[ci], size: 6, opacity: 0.7 }
+                });
+            });
+            Plotly.newPlot('channel-chart', chanTraces, {
+                ...plotlyLayout,
+                title: { text: 'Actual Channel Labels on PCA-Reduced Data', font: { color: '#e2e8f0', size: 14 } },
+                xaxis: { ...plotlyLayout.xaxis, title: 'Dimension 1' },
+                yaxis: { ...plotlyLayout.yaxis, title: 'Dimension 2' }
+            }, plotlyConfig);
+
+            document.getElementById('cluster-result').classList.remove('hidden');
+        }
+
+        /* ---- 7. predict ---- */
+        async function predictSegment() {
+            const vals = {
+                Fresh: parseFloat(document.getElementById('p-fresh').value),
+                Milk: parseFloat(document.getElementById('p-milk').value),
+                Grocery: parseFloat(document.getElementById('p-grocery').value),
+                Frozen: parseFloat(document.getElementById('p-frozen').value),
+                Detergents_Paper: parseFloat(document.getElementById('p-det').value),
+                Delicatessen: parseFloat(document.getElementById('p-deli').value),
+            };
+            const n = parseInt(document.getElementById('n-clusters').value);
+            const d = await post('/api/predict', { values: vals, n_clusters: n });
+            const el = document.getElementById('predict-result');
+            el.innerHTML = `<div class="result-box success">
+        <p style="margin-bottom:4px;font-weight:600;">Predicted Segment</p>
+        <div class="big-num">Cluster ${d.cluster}</div>
+        <p style="margin-top:8px;font-size:0.82rem;color:var(--text-muted);">
+            PCA coordinates: (${d.reduced_point[0].toFixed(3)}, ${d.reduced_point[1].toFixed(3)})
+        </p>
+    </div>`;
+            el.classList.remove('hidden');
+        }
+
+        /* ---- init ---- */
+        document.addEventListener('DOMContentLoaded', () => {
+            loadOverview();
+            loadSamples();
+        });
+    </script>
+</body>
+
+</html>

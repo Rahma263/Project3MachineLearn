@@ -1,0 +1,451 @@
+/* ===================================================================
+   Customer Segments – Premium Dark Theme
+   =================================================================== */
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+
+/* --- Reset & Base ------------------------------------------------- */
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+:root {
+    --bg-primary: #0a0e1a;
+    --bg-secondary: #111827;
+    --bg-card: rgba(17, 24, 39, 0.65);
+    --border-card: rgba(99, 102, 241, 0.18);
+    --text-primary: #e2e8f0;
+    --text-secondary: #94a3b8;
+    --text-muted: #64748b;
+    --accent-cyan: #22d3ee;
+    --accent-violet: #a78bfa;
+    --accent-pink: #f472b6;
+    --accent-lime: #a3e635;
+    --accent-orange: #fb923c;
+    --gradient-hero: linear-gradient(135deg, #6366f1 0%, #a855f7 50%, #ec4899 100%);
+    --gradient-card: linear-gradient(160deg, rgba(99, 102, 241, 0.08) 0%, rgba(168, 85, 247, 0.05) 100%);
+    --shadow-glow: 0 0 40px rgba(99, 102, 241, 0.12);
+    --radius-lg: 16px;
+    --radius-md: 10px;
+    --radius-sm: 6px;
+    --transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+html {
+    font-size: 15px;
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    background: var(--bg-primary);
+    color: var(--text-primary);
+    line-height: 1.65;
+    min-height: 100vh;
+    overflow-x: hidden;
+}
+
+/* animated gradient bg */
+body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background: radial-gradient(ellipse at 20% 0%, rgba(99, 102, 241, 0.10) 0%, transparent 60%),
+        radial-gradient(ellipse at 80% 100%, rgba(168, 85, 247, 0.08) 0%, transparent 60%);
+    pointer-events: none;
+    z-index: -1;
+}
+
+a {
+    color: var(--accent-cyan);
+    text-decoration: none;
+}
+
+/* --- Utility ------------------------------------------------------ */
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 24px;
+}
+
+/* --- Hero / Header ------------------------------------------------ */
+.hero {
+    text-align: center;
+    padding: 56px 24px 40px;
+}
+
+.hero h1 {
+    font-size: 2.8rem;
+    font-weight: 800;
+    background: var(--gradient-hero);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    letter-spacing: -0.5px;
+}
+
+.hero .subtitle {
+    margin-top: 10px;
+    font-size: 1.05rem;
+    color: var(--text-secondary);
+    font-weight: 400;
+}
+
+.hero .badge {
+    display: inline-block;
+    margin-top: 18px;
+    padding: 5px 16px;
+    border-radius: 20px;
+    font-size: 0.78rem;
+    font-weight: 600;
+    background: rgba(99, 102, 241, 0.15);
+    border: 1px solid rgba(99, 102, 241, 0.3);
+    color: var(--accent-violet);
+    letter-spacing: 0.5px;
+}
+
+/* --- Cards (glass) ------------------------------------------------ */
+.card {
+    background: var(--bg-card);
+    border: 1px solid var(--border-card);
+    border-radius: var(--radius-lg);
+    padding: 28px 30px;
+    margin-bottom: 28px;
+    backdrop-filter: blur(18px);
+    -webkit-backdrop-filter: blur(18px);
+    box-shadow: var(--shadow-glow);
+    transition: transform var(--transition), box-shadow var(--transition);
+}
+
+.card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 0 60px rgba(99, 102, 241, 0.18);
+}
+
+.card h2 {
+    font-size: 1.35rem;
+    font-weight: 700;
+    margin-bottom: 6px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.card h2 .icon {
+    font-size: 1.3rem;
+}
+
+.card .desc {
+    font-size: 0.88rem;
+    color: var(--text-muted);
+    margin-bottom: 18px;
+}
+
+/* --- Stat mini-cards ---------------------------------------------- */
+.stat-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    gap: 14px;
+    margin-bottom: 18px;
+}
+
+.stat-mini {
+    background: var(--gradient-card);
+    border: 1px solid var(--border-card);
+    border-radius: var(--radius-md);
+    padding: 16px 18px;
+    text-align: center;
+    transition: transform var(--transition);
+}
+
+.stat-mini:hover {
+    transform: scale(1.04);
+}
+
+.stat-mini .label {
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--text-muted);
+    margin-bottom: 4px;
+}
+
+.stat-mini .value {
+    font-size: 1.5rem;
+    font-weight: 700;
+    background: var(--gradient-hero);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+/* --- Tables ------------------------------------------------------- */
+.table-wrap {
+    overflow-x: auto;
+    margin-top: 10px;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.85rem;
+}
+
+thead th {
+    background: rgba(99, 102, 241, 0.12);
+    padding: 10px 14px;
+    text-align: right;
+    font-weight: 600;
+    color: var(--accent-cyan);
+    white-space: nowrap;
+    position: sticky;
+    top: 0;
+}
+
+thead th:first-child {
+    text-align: left;
+    border-radius: var(--radius-sm) 0 0 0;
+}
+
+thead th:last-child {
+    border-radius: 0 var(--radius-sm) 0 0;
+}
+
+tbody td {
+    padding: 9px 14px;
+    text-align: right;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+    color: var(--text-secondary);
+}
+
+tbody td:first-child {
+    text-align: left;
+    color: var(--text-primary);
+    font-weight: 500;
+}
+
+tbody tr:hover td {
+    background: rgba(99, 102, 241, 0.06);
+}
+
+/* --- Forms -------------------------------------------------------- */
+.form-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    align-items: flex-end;
+    margin-bottom: 14px;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.form-group label {
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    color: var(--text-muted);
+    font-weight: 600;
+}
+
+input[type="number"],
+select {
+    background: rgba(15, 23, 42, 0.8);
+    border: 1px solid rgba(99, 102, 241, 0.25);
+    border-radius: var(--radius-sm);
+    padding: 9px 14px;
+    color: var(--text-primary);
+    font-family: inherit;
+    font-size: 0.9rem;
+    min-width: 120px;
+    transition: border-color var(--transition);
+}
+
+input[type="number"]:focus,
+select:focus {
+    outline: none;
+    border-color: var(--accent-cyan);
+    box-shadow: 0 0 0 3px rgba(34, 211, 238, 0.15);
+}
+
+/* --- Buttons ------------------------------------------------------ */
+.btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 10px 22px;
+    border: none;
+    border-radius: var(--radius-sm);
+    font-family: inherit;
+    font-size: 0.88rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all var(--transition);
+}
+
+.btn-primary {
+    background: var(--gradient-hero);
+    color: #fff;
+}
+
+.btn-primary:hover {
+    filter: brightness(1.15);
+    transform: translateY(-1px);
+}
+
+.btn-secondary {
+    background: rgba(99, 102, 241, 0.12);
+    border: 1px solid rgba(99, 102, 241, 0.3);
+    color: var(--accent-violet);
+}
+
+.btn-secondary:hover {
+    background: rgba(99, 102, 241, 0.22);
+}
+
+/* --- Score bar ---------------------------------------------------- */
+.score-bar-wrap {
+    margin: 14px 0;
+}
+
+.score-bar-track {
+    height: 14px;
+    background: rgba(255, 255, 255, 0.06);
+    border-radius: 7px;
+    overflow: hidden;
+}
+
+.score-bar-fill {
+    height: 100%;
+    border-radius: 7px;
+    background: var(--gradient-hero);
+    transition: width 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.score-label {
+    margin-top: 6px;
+    font-size: 0.82rem;
+    color: var(--text-secondary);
+}
+
+/* --- Result box --------------------------------------------------- */
+.result-box {
+    margin-top: 14px;
+    padding: 16px 20px;
+    border-radius: var(--radius-md);
+    background: rgba(34, 211, 238, 0.06);
+    border: 1px solid rgba(34, 211, 238, 0.2);
+}
+
+.result-box.success {
+    background: rgba(163, 230, 53, 0.06);
+    border-color: rgba(163, 230, 53, 0.2);
+}
+
+.result-box .big-num {
+    font-size: 2.2rem;
+    font-weight: 800;
+    background: var(--gradient-hero);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+/* --- Charts ------------------------------------------------------- */
+.chart-container {
+    margin-top: 16px;
+    border-radius: var(--radius-md);
+    overflow: hidden;
+    min-height: 380px;
+}
+
+/* --- Loading spinner ---------------------------------------------- */
+.spinner {
+    display: inline-block;
+    width: 22px;
+    height: 22px;
+    border: 3px solid rgba(255, 255, 255, 0.15);
+    border-top-color: var(--accent-cyan);
+    border-radius: 50%;
+    animation: spin 0.7s linear infinite;
+    vertical-align: middle;
+    margin-right: 8px;
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+/* hidden */
+.hidden {
+    display: none !important;
+}
+
+/* --- Responsive --------------------------------------------------- */
+@media (max-width: 640px) {
+    .hero h1 {
+        font-size: 1.9rem;
+    }
+
+    .card {
+        padding: 20px 18px;
+    }
+
+    .form-row {
+        flex-direction: column;
+    }
+
+    .stat-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+/* --- Outlier chip ------------------------------------------------- */
+.chip {
+    display: inline-block;
+    padding: 3px 10px;
+    border-radius: 12px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    margin: 2px;
+}
+
+.chip-danger {
+    background: rgba(244, 114, 182, 0.15);
+    color: var(--accent-pink);
+    border: 1px solid rgba(244, 114, 182, 0.3);
+}
+
+.chip-info {
+    background: rgba(34, 211, 238, 0.12);
+    color: var(--accent-cyan);
+    border: 1px solid rgba(34, 211, 238, 0.25);
+}
+
+.chip-success {
+    background: rgba(163, 230, 53, 0.12);
+    color: var(--accent-lime);
+    border: 1px solid rgba(163, 230, 53, 0.25);
+}
+
+/* --- Section spacer ----------------------------------------------- */
+section {
+    margin-bottom: 8px;
+}
+
+/* --- Footer ------------------------------------------------------- */
+.footer {
+    text-align: center;
+    padding: 30px 0 22px;
+    font-size: 0.78rem;
+    color: var(--text-muted);
+}
