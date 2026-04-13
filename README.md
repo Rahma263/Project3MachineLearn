@@ -1,6 +1,3 @@
-Here's the fully corrected and rewritten README with all images properly displayed:
-
-````markdown
 # 🎯 Customer Segments - ML Web Application
 
 ## Unsupervised Learning | Machine Learning Engineer Nanodegree
@@ -126,6 +123,7 @@ pip install numpy pandas matplotlib scikit-learn flask
 # Or if you have a requirements.txt
 pip install -r requirements.txt
 ```
+
 ````
 
 ### Running the Application
@@ -335,4 +333,5 @@ Made with ❤️ using Flask & scikit-learn
 | Missing `div` close tags     | Added proper HTML closures          |
 | Inconsistent headers         | Added `---` horizontal rules        |
 
-Save this as `README.md` in your `P3/` folder and all images will display correctly!
+
+````
