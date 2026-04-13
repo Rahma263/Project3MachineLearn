@@ -46,7 +46,7 @@ _Interactive customer segmentation with Flask web interface_
 
 |                     Feature Correlation Matrix                      |
 | :-----------------------------------------------------------------: |
-|            <img src="p3/images/output1.png" width="800">            |
+|            <img src="P3\images\output1.PNG" width="800">            |
 | _Log-transformed data scatter matrix showing feature relationships_ |
 
 </div>
@@ -63,7 +63,7 @@ _Interactive customer segmentation with Flask web interface_
 
 |                     PCA Component Weights                     |                  PCA Biplot                   |
 | :-----------------------------------------------------------: | :-------------------------------------------: |
-|         <img src="p3/images/output.png" width="500">          | <img src="p3/images/output3.png" width="500"> |
+|         <img src="p3/images/output.PNG" width="500">          | <img src="p3/images/output3.PNG" width="500"> |
 | _Explained variance: Dim 1 (44.24%) + Dim 2 (27.66%) = 71.9%_ |       _Feature projections on PC plane_       |
 
 </div>
@@ -80,7 +80,7 @@ _Interactive customer segmentation with Flask web interface_
 
 |                     K-Means Clustering                     |            Ground Truth Comparison            |
 | :--------------------------------------------------------: | :-------------------------------------------: |
-|       <img src="p3/images/output4.png" width="500">        | <img src="p3/images/output5.png" width="500"> |
+|       <img src="p3/images/output4.PNG" width="500">        | <img src="p3/images/output5.PNG" width="500"> |
 | _2 clusters identified (k=2 optimal via silhouette score)_ | _Red: Hotel/Restaurant/Cafe, Green: Retailer_ |
 
 </div>
@@ -158,14 +158,17 @@ Project3MachineLearn/
     ├── 📓 customer_segments.ipynb     # Jupyter notebook analysis
     ├── 📊 customers.csv              # Dataset (440 samples)
     ├── 🐍 visuals.py                # Visualization utilities
-    ├── 🖼️ output.png                # PCA component weights
-    ├── 🖼️ output1.png               # Scatter matrix
-    ├── 🖼️ output3.png               # PCA biplot
-    ├── 🖼️ output4.png               # Clustering results
-    ├── 🖼️ output5.png               # Channel comparison
-    ├── 🖼️ page1.PNG                 # Web app dashboard
-    ├── 🖼️ page2.PNG                 # Web app samples
-    ├── 🖼️ page3.PNG                 # Web app ML pipeline
+    ├── 🖼️ images/                   # Project images
+    │   ├── output.png               # PCA component weights
+    │   ├── output1.png              # Scatter matrix
+    │   ├── output3.png              # PCA biplot
+    │   ├── output4.png              # Clustering results
+    │   ├── output5.png              # Channel comparison
+    │   ├── page1.PNG                # Web app dashboard
+    │   ├── page2.PNG                # Web app samples
+    │   └── page3.PNG                # Web app ML pipeline
+    ├── 🎬 video/                    # Project videos
+    │   └── APPFlask.mp4             # GUI demo video
     └── 🌐 flask_app/                # Flask web application
         ├── 🐍 app.py                # Flask main application
         ├── 🐍 ml_engine.py          # ML prediction engine
