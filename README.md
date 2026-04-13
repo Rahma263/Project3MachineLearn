@@ -20,7 +20,7 @@ _Interactive customer segmentation with Flask web interface_
 
 |            📊 Dashboard Overview            |             🔍 Sample Analysis              |               ⚡ ML Pipeline                |
 | :-----------------------------------------: | :-----------------------------------------: | :-----------------------------------------: |
-| <img src="p3/images/page1.png" width="400"> | <img src="p3/images/page2.png" width="400"> | <img src="p3/images/page3.png" width="400"> |
+| <img src="P3/images/page1.png" width="400"> | <img src="P3/images/page2.png" width="400"> | <img src="P3/images/page3.png" width="400"> |
 
 **Dark-themed interactive dashboard for customer segmentation analysis**
 
@@ -63,7 +63,7 @@ _Interactive customer segmentation with Flask web interface_
 
 |                     PCA Component Weights                     |                  PCA Biplot                   |
 | :-----------------------------------------------------------: | :-------------------------------------------: |
-|         <img src="p3/images/output.PNG" width="500">          | <img src="p3/images/output3.PNG" width="500"> |
+|         <img src="P3/images/output.PNG" width="500">          | <img src="P3/images/output3.PNG" width="500"> |
 | _Explained variance: Dim 1 (44.24%) + Dim 2 (27.66%) = 71.9%_ |       _Feature projections on PC plane_       |
 
 </div>
@@ -80,7 +80,7 @@ _Interactive customer segmentation with Flask web interface_
 
 |                     K-Means Clustering                     |            Ground Truth Comparison            |
 | :--------------------------------------------------------: | :-------------------------------------------: |
-|       <img src="p3/images/output4.PNG" width="500">        | <img src="p3/images/output5.PNG" width="500"> |
+|       <img src="P3/images/output4.PNG" width="500">        | <img src="P3/images/output5.PNG" width="500"> |
 | _2 clusters identified (k=2 optimal via silhouette score)_ | _Red: Hotel/Restaurant/Cafe, Green: Retailer_ |
 
 </div>
