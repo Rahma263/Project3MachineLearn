@@ -317,7 +317,6 @@ clusters = kmeans.fit_predict(reduced_data)
 Made with ❤️ using Flask & scikit-learn
 
 </div>
-```
 
 ---
 
