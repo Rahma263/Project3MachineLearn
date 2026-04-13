@@ -20,7 +20,7 @@ _Interactive customer segmentation with Flask web interface_
 
 |            📊 Dashboard Overview            |             🔍 Sample Analysis              |               ⚡ ML Pipeline                |
 | :-----------------------------------------: | :-----------------------------------------: | :-----------------------------------------: |
-| <img src="p3/images/page1.PNG" width="400"> | <img src="p3/images/page2.PNG" width="400"> | <img src="p3/images/page3.PNG" width="400"> |
+| <img src="p3/images/page1.png" width="400"> | <img src="p3/images/page2.png" width="400"> | <img src="p3/images/page3.png" width="400"> |
 
 **Dark-themed interactive dashboard for customer segmentation analysis**
 
