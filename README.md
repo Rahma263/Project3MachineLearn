@@ -46,7 +46,7 @@ _Interactive customer segmentation with Flask web interface_
 
 |                     Feature Correlation Matrix                      |
 | :-----------------------------------------------------------------: |
-|            <img src="P3\images\output1.PNG" width="800">            |
+|            <img src="P3/images/output1.PNG" width="800">            |
 | _Log-transformed data scatter matrix showing feature relationships_ |
 
 </div>
@@ -319,16 +319,3 @@ Made with ❤️ using Flask & scikit-learn
 </div>
 
 ---
-
-## Key Fixes Made:
-
-| Issue                        | Fix                                 |
-| ---------------------------- | ----------------------------------- |
-| `P3\images\OUTPUT1.PNG`      | `output1.png` (correct case & path) |
-| `P3\images\OUTPUT4.PNG`      | `output4.png`                       |
-| `P3\images\OUTPUT5.PNG`      | `output5.png`                       |
-| Backslashes `\`              | Forward slashes `/`                 |
-| Broken code block formatting | Proper `bash and `python blocks     |
-| Misaligned ASCII diagram     | Properly aligned with `───▶` arrows |
-| Missing `div` close tags     | Added proper HTML closures          |
-| Inconsistent headers         | Added `---` horizontal rules        |
