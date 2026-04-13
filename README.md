@@ -124,8 +124,6 @@ pip install numpy pandas matplotlib scikit-learn flask
 pip install -r requirements.txt
 ```
 
-````
-
 ### Running the Application
 
 #### Option 1: Flask Web App
@@ -332,6 +330,3 @@ Made with ❤️ using Flask & scikit-learn
 | Misaligned ASCII diagram     | Properly aligned with `───▶` arrows |
 | Missing `div` close tags     | Added proper HTML closures          |
 | Inconsistent headers         | Added `---` horizontal rules        |
-
-
-````
